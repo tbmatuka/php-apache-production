@@ -30,7 +30,7 @@ RUN apt-get clean && \
         apache2 \
         ssmtp \
         imagemagick \
-        libapache2-mod-php8.1 php8.1 php8.1-amqp php8.1-apcu php8.1-bcmath php8.1-bz2 php8.1-cgi php8.1-cli php8.1-common php8.1-curl php8.1-dev php8.1-gd php8.1-gmp php8.1-imagick php8.1-imap php8.1-intl php8.1-ldap php8.1-mailparse php8.1-mbstring php8.1-memcached php8.1-mysql php8.1-odbc php8.1-opcache php8.1-pgsql php8.1-pspell php8.1-readline php8.1-redis php8.1-snmp php8.1-soap php8.1-sqlite3 php8.1-tidy php8.1-uuid php8.1-xml php8.1-xsl php8.1-yaml php8.1-zip php8.1-zmq \
+        libapache2-mod-php8.2 php8.2 php8.2-amqp php8.2-apcu php8.2-bcmath php8.2-bz2 php8.2-cgi php8.2-cli php8.2-common php8.2-curl php8.2-dev php8.2-gd php8.2-gmp php8.2-imagick php8.2-imap php8.2-intl php8.2-ldap php8.2-mailparse php8.2-mbstring php8.2-memcached php8.2-mysql php8.2-odbc php8.2-opcache php8.2-pgsql php8.2-pspell php8.2-readline php8.2-redis php8.2-snmp php8.2-soap php8.2-sqlite3 php8.2-tidy php8.2-uuid php8.2-xml php8.2-xsl php8.2-yaml php8.2-zip php8.2-zmq \
         php-mail && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -44,11 +44,11 @@ RUN phpenmod apcu && \
     a2enconf remoteip
 
 # set php version as active
-RUN update-alternatives --set php "/usr/bin/php8.1"
+RUN update-alternatives --set php "/usr/bin/php8.2"
 
 RUN for phpenv in apache2 cli; do \
-        mv "/etc/php/8.1/$phpenv/php.ini" "/etc/php/8.1/$phpenv/php.ini.dist" ; \
-        ln -s /etc/php/php.ini "/etc/php/8.1/$phpenv/php.ini"; \
+        mv "/etc/php/8.2/$phpenv/php.ini" "/etc/php/8.2/$phpenv/php.ini.dist" ; \
+        ln -s /etc/php/php.ini "/etc/php/8.2/$phpenv/php.ini"; \
     done
 
 # output apache logs to stdout
