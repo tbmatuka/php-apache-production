@@ -34,7 +34,7 @@ The only enabled vhost file is `/etc/apache2/sites-available/000-default.conf` a
 #### mod_remoteip
 mod_remoteip is configured in `/etc/apache2/conf-available/remoteip.conf`. It is configured to trust the internal Docker network and to load the `trusted-proxies.lst` file.
 
-Config file `/etc/apache2/trusted-proxies.lst` contains a list of IP ranges that are trusted for mod_remoteip. You should have your load balancers listed here if you want the Apache IPs to be correct.
+Config file `/etc/apache2/trusted-proxies.lst` contains a list of IP ranges that are trusted for mod_remoteip. You should have your load balancers listed here if you want the Apache IPs to be correct. The `trusted-proxies.lst` file can be overwritten by setting the `APACHE_TRUSTED_PROXIES` environment variable.
 
 ### Init script
 If you create and make executable `/usr/local/bin/apache_init.sh` it will be run by the entrypoint script right before Apache is started. You can use this to run migrations or anything else your app needs to work.

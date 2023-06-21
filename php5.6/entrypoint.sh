@@ -5,15 +5,26 @@ apacheEnvFilePath='/etc/apache2/conf-enabled/docker_env.conf'
 # empty the env file
 : | sudo tee  ${apacheEnvFilePath} > /dev/null
 
-if [ ! -z "${APACHE_VARS}" ]
+if [ -n "${APACHE_VARS}" ]
 then
     echo "Adding environment variables to apache:"
 
     for APACHE_VAR_NAME in ${APACHE_VARS}
     do
         echo "Adding ${APACHE_VAR_NAME}"
-        echo "SetEnv" "${APACHE_VAR_NAME}" "$(printenv ${APACHE_VAR_NAME})" | sudo tee -a ${apacheEnvFilePath} > /dev/null
+        echo "SetEnv ${APACHE_VAR_NAME} \"${!APACHE_VAR_NAME}\"" | sudo tee -a ${apacheEnvFilePath} > /dev/null
     done
+fi
+
+trustedProxiesFilePath='/etc/apache2/trusted-proxies.lst'
+
+if [ -n "${APACHE_TRUSTED_PROXIES}" ]
+then
+    # empty the proxies file
+    : | sudo tee  ${trustedProxiesFilePath} > /dev/null
+
+    echo "Adding trusted proxies to apache: ${APACHE_TRUSTED_PROXIES}"
+    echo "${APACHE_TRUSTED_PROXIES}" | sudo tee -a ${trustedProxiesFilePath} > /dev/null
 fi
 
 if [ ! -z "${SMTP}" ]
