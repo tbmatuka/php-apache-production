@@ -51,7 +51,9 @@ RUN cp "/etc/php/7.4/apache2/php.ini" "/etc/php/php.ini" ; \
     mkdir /etc/php/conf.d; ln -s /etc/php/7.4/mods-available/* /etc/php/conf.d/ ; \
     for phpenv in apache2 cli cgi; do \
         mv "/etc/php/7.4/$phpenv/php.ini" "/etc/php/7.4/$phpenv/php.ini.dist" ; \
+        mv "/etc/php/7.4/$phpenv/conf.d" "/etc/php/7.4/$phpenv/conf.d.dist" ; \
         ln -s /etc/php/php.ini "/etc/php/7.4/$phpenv/php.ini"; \
+        ln -s /etc/php/conf.d/ "/etc/php/7.4/$phpenv/conf.d"; \
     done
 
 # output apache logs to stdout
