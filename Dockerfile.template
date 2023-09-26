@@ -82,6 +82,8 @@ COPY ./apache2-foreground.sh /usr/local/sbin/apache2-foreground.sh
 # prepare entrypoint and default command
 COPY ./entrypoint.sh /usr/local/bin/
 
+##fixes##
+
 WORKDIR /app/
 
 USER www-data

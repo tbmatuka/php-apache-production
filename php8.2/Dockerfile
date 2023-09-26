@@ -82,6 +82,11 @@ COPY ./apache2-foreground.sh /usr/local/sbin/apache2-foreground.sh
 # prepare entrypoint and default command
 COPY ./entrypoint.sh /usr/local/bin/
 
+RUN mv /etc/php/conf.d/mysqlnd.ini /etc/php/conf.d/001-mysqlnd.ini ; \
+    mv /etc/php/conf.d/msgpack.ini /etc/php/conf.d/001-msgpack.ini ; \
+    mv /etc/php/conf.d/mbstring.ini /etc/php/conf.d/001-mbstring.ini
+
+
 WORKDIR /app/
 
 USER www-data
