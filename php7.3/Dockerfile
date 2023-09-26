@@ -46,7 +46,10 @@ RUN phpenmod apcu && \
 # set php version as active
 RUN update-alternatives --set php "/usr/bin/php7.3"
 
-RUN for phpenv in apache2 cli; do \
+# set up php.ini
+RUN cp "/etc/php/7.3/apache2/php.ini" "/etc/php/php.ini" ; \
+    mkdir /etc/php/conf.d; ln -s /etc/php/7.3/mods-available/* /etc/php/conf.d/ ; \
+    for phpenv in apache2 cli cgi; do \
         mv "/etc/php/7.3/$phpenv/php.ini" "/etc/php/7.3/$phpenv/php.ini.dist" ; \
         ln -s /etc/php/php.ini "/etc/php/7.3/$phpenv/php.ini"; \
     done
