@@ -40,7 +40,7 @@ COPY ./remoteip.conf /etc/apache2/conf-available/remoteip.conf
 # enable missing modules
 RUN phpenmod apcu && \
     phpenmod apcu_bc && \
-    a2enmod rewrite headers ssl remoteip && \
+    a2enmod rewrite headers ssl remoteip expires && \
     a2enconf remoteip
 
 # set php version as active
