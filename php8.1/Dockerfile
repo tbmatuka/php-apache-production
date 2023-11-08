@@ -29,6 +29,7 @@ RUN apt-get clean && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes \
         apache2 \
         ssmtp \
+        mysql-client \
         imagemagick \
         libapache2-mod-php8.1 php8.1 php8.1-amqp php8.1-apcu php8.1-bcmath php8.1-bz2 php8.1-cgi php8.1-cli php8.1-common php8.1-curl php8.1-dev php8.1-gd php8.1-gmp php8.1-imagick php8.1-imap php8.1-intl php8.1-ldap php8.1-mailparse php8.1-mbstring php8.1-memcached php8.1-mysql php8.1-odbc php8.1-opcache php8.1-pgsql php8.1-pspell php8.1-readline php8.1-redis php8.1-snmp php8.1-soap php8.1-sqlite3 php8.1-tidy php8.1-uuid php8.1-xml php8.1-xsl php8.1-yaml php8.1-zip php8.1-zmq \
         php-mail && \
@@ -40,7 +41,7 @@ COPY ./remoteip.conf /etc/apache2/conf-available/remoteip.conf
 # enable missing modules
 RUN phpenmod apcu && \
     phpenmod apcu_bc && \
-    a2enmod rewrite headers ssl remoteip && \
+    a2enmod rewrite headers ssl remoteip expires && \
     a2enconf remoteip
 
 # set php version as active
@@ -92,6 +93,8 @@ WORKDIR /app/
 USER www-data
 
 EXPOSE 80
+
+HEALTHCHECK CMD curl --head http://localhost/ || exit 1
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 

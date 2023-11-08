@@ -29,6 +29,7 @@ RUN apt-get clean && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes \
         apache2 \
         ssmtp \
+        mysql-client \
         imagemagick \
         libapache2-mod-php7.3 php7.3 php7.3-amqp php7.3-apcu php7.3-apcu-bc php7.3-bcmath php7.3-bz2 php7.3-cgi php7.3-cli php7.3-common php7.3-curl php7.3-dev php7.3-gd php7.3-gmp php7.3-imagick php7.3-imap php7.3-intl php7.3-json php7.3-ldap php7.3-mailparse php7.3-mbstring php7.3-memcache php7.3-memcached php7.3-mongodb php7.3-mysql php7.3-odbc php7.3-opcache php7.3-pgsql php7.3-pspell php7.3-readline php7.3-recode php7.3-redis php7.3-snmp php7.3-soap php7.3-sqlite3 php7.3-tideways php7.3-tidy php7.3-uuid php7.3-xml php7.3-xmlrpc php7.3-xsl php7.3-yaml php7.3-zip php7.3-zmq \
         php-mail && \
@@ -40,7 +41,7 @@ COPY ./remoteip.conf /etc/apache2/conf-available/remoteip.conf
 # enable missing modules
 RUN phpenmod apcu && \
     phpenmod apcu_bc && \
-    a2enmod rewrite headers ssl remoteip && \
+    a2enmod rewrite headers ssl remoteip expires && \
     a2enconf remoteip
 
 # set php version as active
@@ -93,6 +94,8 @@ WORKDIR /app/
 USER www-data
 
 EXPOSE 80
+
+HEALTHCHECK CMD curl --head http://localhost/ || exit 1
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 

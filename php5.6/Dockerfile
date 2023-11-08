@@ -29,6 +29,7 @@ RUN apt-get clean && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes \
         apache2 \
         ssmtp \
+        mysql-client \
         imagemagick \
         libapache2-mod-php5.6 php5.6 php5.6-amqp php5.6-apcu php5.6-bcmath php5.6-bz2 php5.6-cgi php5.6-cli php5.6-common php5.6-curl php5.6-dev php5.6-gd php5.6-gmp php5.6-imagick php5.6-imap php5.6-intl php5.6-json php5.6-ldap php5.6-mailparse php5.6-mbstring php5.6-mcrypt php5.6-memcache php5.6-memcached php5.6-mysql php5.6-odbc php5.6-opcache php5.6-pgsql php5.6-pspell php5.6-readline php5.6-recode php5.6-redis php5.6-snmp php5.6-soap php5.6-sqlite3 php5.6-tidy php5.6-xml php5.6-xmlrpc php5.6-xsl php5.6-yaml php5.6-zip php5.6-zmq \
         php-mail && \
@@ -40,7 +41,7 @@ COPY ./remoteip.conf /etc/apache2/conf-available/remoteip.conf
 # enable missing modules
 RUN phpenmod apcu && \
     phpenmod apcu_bc && \
-    a2enmod rewrite headers ssl remoteip && \
+    a2enmod rewrite headers ssl remoteip expires && \
     a2enconf remoteip
 
 # set php version as active
@@ -93,6 +94,8 @@ WORKDIR /app/
 USER www-data
 
 EXPOSE 80
+
+HEALTHCHECK CMD curl --head http://localhost/ || exit 1
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 

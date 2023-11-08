@@ -29,6 +29,7 @@ RUN apt-get clean && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes \
         apache2 \
         ssmtp \
+        mysql-client \
         imagemagick \
         ##php-packages## \
         php-mail && \
@@ -89,6 +90,8 @@ WORKDIR /app/
 USER www-data
 
 EXPOSE 80
+
+HEALTHCHECK CMD curl --head http://localhost/ || exit 1
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
