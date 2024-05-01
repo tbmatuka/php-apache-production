@@ -3,8 +3,8 @@ FROM ubuntu:22.04
 MAINTAINER Tin Benjamin Matuka <mail@tbmatuka.com>
 
 # set up timezone
-ENV TIMEZONE="UTC"
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ARG TIMEZONE="UTC"
+RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} > /etc/timezone
 
 # install deps, apache, php and php modules all in one run and clean up afterwards to reduce the snapshot size
 RUN apt-get clean && \

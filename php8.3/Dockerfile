@@ -31,7 +31,7 @@ RUN apt-get clean && \
         ssmtp \
         mysql-client \
         imagemagick \
-        libapache2-mod-php7.0 php7.0 php7.0-amqp php7.0-apcu php7.0-apcu-bc php7.0-bcmath php7.0-bz2 php7.0-cgi php7.0-cli php7.0-common php7.0-curl php7.0-dev php7.0-gd php7.0-gmp php7.0-imagick php7.0-imap php7.0-intl php7.0-json php7.0-ldap php7.0-mailparse php7.0-mbstring php7.0-mcrypt php7.0-memcache php7.0-memcached php7.0-mongodb php7.0-mysql php7.0-odbc php7.0-opcache php7.0-pgsql php7.0-pspell php7.0-readline php7.0-recode php7.0-redis php7.0-snmp php7.0-soap php7.0-sodium php7.0-sqlite3 php7.0-tideways php7.0-tidy php7.0-uuid php7.0-xml php7.0-xmlrpc php7.0-xsl php7.0-yaml php7.0-zip php7.0-zmq \
+        libapache2-mod-php8.3 php8.3 php8.3-amqp php8.3-apcu php8.3-bcmath php8.3-bz2 php8.3-cgi php8.3-cli php8.3-common php8.3-curl php8.3-dev php8.3-gd php8.3-gmp php8.3-imagick php8.3-imap php8.3-intl php8.3-ldap php8.3-mailparse php8.3-mbstring php8.3-memcached php8.3-mysql php8.3-odbc php8.3-opcache php8.3-pgsql php8.3-pspell php8.3-readline php8.3-redis php8.3-snmp php8.3-soap php8.3-sqlite3 php8.3-tidy php8.3-uuid php8.3-xml php8.3-xsl php8.3-yaml php8.3-zip php8.3-zmq \
         php-mail && \
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -45,16 +45,16 @@ RUN phpenmod apcu && \
     a2enconf remoteip
 
 # set php version as active
-RUN update-alternatives --set php "/usr/bin/php7.0"
+RUN update-alternatives --set php "/usr/bin/php8.3"
 
 # set up php.ini
-RUN cp "/etc/php/7.0/apache2/php.ini" "/etc/php/php.ini" ; \
-    mkdir /etc/php/conf.d; ln -s /etc/php/7.0/mods-available/* /etc/php/conf.d/ ; \
+RUN cp "/etc/php/8.3/apache2/php.ini" "/etc/php/php.ini" ; \
+    mkdir /etc/php/conf.d; ln -s /etc/php/8.3/mods-available/* /etc/php/conf.d/ ; \
     for phpenv in apache2 cli cgi; do \
-        mv "/etc/php/7.0/$phpenv/php.ini" "/etc/php/7.0/$phpenv/php.ini.dist" ; \
-        mv "/etc/php/7.0/$phpenv/conf.d" "/etc/php/7.0/$phpenv/conf.d.dist" ; \
-        ln -s /etc/php/php.ini "/etc/php/7.0/$phpenv/php.ini"; \
-        ln -s /etc/php/conf.d/ "/etc/php/7.0/$phpenv/conf.d"; \
+        mv "/etc/php/8.3/$phpenv/php.ini" "/etc/php/8.3/$phpenv/php.ini.dist" ; \
+        mv "/etc/php/8.3/$phpenv/conf.d" "/etc/php/8.3/$phpenv/conf.d.dist" ; \
+        ln -s /etc/php/php.ini "/etc/php/8.3/$phpenv/php.ini"; \
+        ln -s /etc/php/conf.d/ "/etc/php/8.3/$phpenv/conf.d"; \
     done
 
 # output apache logs to stdout
@@ -85,8 +85,7 @@ COPY ./entrypoint.sh /usr/local/bin/
 
 RUN mv /etc/php/conf.d/mysqlnd.ini /etc/php/conf.d/001-mysqlnd.ini ; \
     mv /etc/php/conf.d/msgpack.ini /etc/php/conf.d/001-msgpack.ini ; \
-    mv /etc/php/conf.d/mbstring.ini /etc/php/conf.d/001-mbstring.ini ; \
-    mv /etc/php/conf.d/xml.ini /etc/php/conf.d/001-xml.ini
+    mv /etc/php/conf.d/mbstring.ini /etc/php/conf.d/001-mbstring.ini
 
 
 WORKDIR /app/
