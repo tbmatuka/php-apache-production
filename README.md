@@ -19,7 +19,7 @@ SSMTP is a simple sendmail implementation that sends your messages to the config
 ### sendmail
 You can set the environment variable SMTP in Docker. Entrypoint script will set that as the SMTP host for SSMTP.
 
-PHP command `mail()` uses sendmail to send mail, so you if you're using it you will need to set this.
+PHP command `mail()` uses sendmail to send mail, so if you're using it you will need to set this.
 
 ### Apache environment variables
 Any number of environment variables that you set in Docker can be passed to Apache and PHP. All you have to do is list the variable names in the `APACHE_VARS` environment variable. Use space as a delimiter.
