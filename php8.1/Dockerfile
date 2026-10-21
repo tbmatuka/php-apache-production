@@ -1,6 +1,6 @@
-FROM ubuntu:22.04
+FROM ubuntu:26.04
 
-MAINTAINER Tin Benjamin Matuka <mail@tbmatuka.com>
+LABEL org.opencontainers.image.authors="mail@tbmatuka.com"
 
 # set up timezone
 ARG TIMEZONE="UTC"
@@ -12,9 +12,11 @@ RUN apt-get clean && \
     apt-get install -y --force-yes \
         locales \
         curl \
-        software-properties-common \
         git \
         apt-transport-https \
+        lsb-release \
+        ca-certificates \
+        gnupg \
         sudo \
         nvi \
         nano \
@@ -25,7 +27,9 @@ RUN apt-get clean && \
         rsync \
         inetutils-ping && \
     locale-gen en_US.UTF-8 && \
-    LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php && apt-get update && \
+    curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list && \
+    apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes \
         apache2 \
         ssmtp \
