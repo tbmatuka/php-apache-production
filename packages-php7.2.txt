@@ -33,7 +33,6 @@ php7.2-redis
 php7.2-snmp
 php7.2-soap
 php7.2-sqlite3
-php7.2-tideways
 php7.2-tidy
 php7.2-uuid
 php7.2-xml

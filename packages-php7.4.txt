@@ -32,7 +32,6 @@ php7.4-redis
 php7.4-snmp
 php7.4-soap
 php7.4-sqlite3
-php7.4-tideways
 php7.4-tidy
 php7.4-uuid
 php7.4-xml

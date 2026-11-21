@@ -35,7 +35,6 @@ php7.1-snmp
 php7.1-soap
 php7.1-sodium
 php7.1-sqlite3
-php7.1-tideways
 php7.1-tidy
 php7.1-uuid
 php7.1-xml
